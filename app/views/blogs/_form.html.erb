@@ -1,0 +1,66 @@
+<%= javascript_include_tag "character_counter" %>
+<%= form_with(model: blog) do |form| %>
+  <% if blog.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(blog.errors.count, "error") %> prohibited this blog from being saved:</h2>
+
+      <ul>
+        <% blog.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Title -->
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title, id: "title-input", maxlength: 100 %>
+    <% if @blog.title %>
+    <small id="title-counter"><%= @blog.title.length%> / 100</small>
+    <% else %>
+    <small id="title-counter">0 / 100</small>
+    <% end %>
+  </div>
+
+  
+  <!-- Radio buttons for content type -->
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="content_type" id="manual-radio" value="manual" checked>
+    <label class="form-check-label" for="manual-radio">
+      Manual
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="content_type" id="genai-radio" value="genai">
+    <label class="form-check-label" for="genai-radio">
+      GenAi
+    </label>
+  </div>
+
+  <!-- GenAi Button (initially hidden) -->
+  <div id="genai-button-container" style="display: none;">
+    <button type="button" id="generate-button">Generate Content
+      <div id="loadingIndicator" style="display: none;">
+      <span class="spinner-border text-primary" aria-hidden="true"></span>
+      </div>
+    </button>
+  </div>
+
+  <!-- Body-->
+  <div>
+    <%= form.label :body, style: "display: block" %>
+    <%= form.text_area :body, id: "body-input", maxlength: 4000 %>
+    <% if @blog.body %>
+    <small id="body-counter"><%= @blog.body.length%> / 4000</small>
+    <% else %>
+    <small id="body-counter">0 / 4000</small>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+

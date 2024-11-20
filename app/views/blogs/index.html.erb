@@ -1,0 +1,28 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Blogs" %>
+
+<% if @blogs.empty?%>
+<div class="d-flex justify-content-center align-items-center">
+<p> No Blogs available! </p>
+</div>
+<%else%>
+<h1>Blogs</h1>
+<%end%>
+
+<div id="blogs">
+  <% if @blogs.empty?%>
+  <div class="d-flex justify-content-center align-items-center">
+  <%= link_to "Add New Blog", new_blog_path, class:"btn btn-outline-primary" %>
+  </div>
+  <% else %>
+  <% @blogs.each do |blog| %>
+    <%= render blog %>
+    <p>
+      <%= link_to "Show this blog", blog %>
+    </p>
+  <% end %>
+  <%end%>
+</div>
+
+
