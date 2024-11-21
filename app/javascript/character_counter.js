@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const genaiButtonContainer = document.getElementById("genai-button-container");
   const generateButton = document.getElementById("generate-button");
   const loadingIndicator = document.getElementById("loadingIndicator");
+  const errorMessageElement = document.getElementById('error-message');
 
   // Initial check if GenAi is selected
   if (genaiRadio && genaiButtonContainer) {
@@ -55,8 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
       generateButton.disabled = true;
       loadingIndicator.style.display = "block";  // Show the loading indicator
       const title = titleInput.value;
-  
-      if (title) {
         fetch('/blogs/generate_blog', {
           method: 'POST',
           headers: {
@@ -65,7 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           body: JSON.stringify({ title: title })
         })
-        .then(response => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            return response.json().then((error) => {
+              throw new Error(error.error || 'An error occurred');
+            });
+          }
+          return response.json();
+        })
         .then(data => {
           if (data.body) {
             bodyInput.value = data.body;
@@ -76,15 +82,12 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         })
         .catch(error => {
-          console.error('Error:', error)
+          errorMessageElement.textContent = error.message;
+          errorMessageElement.style.display="block"
          // Re-enable the button and hide the loading indicator in case of an error
           generateButton.disabled = false;
           loadingIndicator.style.display = "none";
         });
-        
-      } else {
-        alert('Please enter a title.');
-      }
     });
   }
 });

@@ -60,7 +60,11 @@ class BlogsController < ApplicationController
 
   def generate_blog
     title = params[:title]
-    prompt = "Write a 500 words blog on title #{title}"
+    if title.blank?
+      render json: { error: "Title is missing" }, status: :unprocessable_entity
+      return
+    end
+    prompt = "Write a 500 words blog on title #{title}. The characters length should be strictly below 5000"
     api_key = ENV["GEMINI_API_KEY"]
 
     if api_key.blank?
@@ -100,8 +104,8 @@ class BlogsController < ApplicationController
       # Render the generated content as the body of the blog
       render json: { body: generated_content }
     else
-      # Return error details in case of failure
-      render json: { error: "Failed to generate content from Gemini.", details: response.body }, status: :unprocessable_entity
+      error_details = JSON.parse(response.body)
+      render json: { error: error_details.dig("error", "message") || "Unknown error" }, status: :unprocessable_entity
     end
   end
 
