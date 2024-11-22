@@ -11,4 +11,8 @@ Get Started
 8. setup .env file and adding our api key accessible to generate_blog method (blogs_controller.js)
 9. the response of this api is returned to our event listener in character_counter.js file, and updates the body field, counter in pur view.
 
-pending: error handling, styling, authentication, authorisation, blogs:thumbnail, devise: username, first_name, last_name, profile. 
+# error handling commit
+1. error handling for blog forms
+2. error handling for generate_blog method 
+
+pending: styling, authentication, authorisation, blogs:thumbnail, devise: username, first_name, last_name, profile. 
