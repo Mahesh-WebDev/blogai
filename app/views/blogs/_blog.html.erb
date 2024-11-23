@@ -3,6 +3,8 @@
     <strong>Title:</strong>
     <%= blog.title %>
   </p>
+    
+  <%= image_tag(blog.thumbnail.attached? ? blog.thumbnail : 'default_thumbnail.png', alt: blog.title, style: 'max-width: 300px; max-height: 300px;') %>
 
   <p>
     <strong>Body:</strong>

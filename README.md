@@ -15,4 +15,7 @@ Get Started
 1. error handling for blog forms
 2. error handling for generate_blog method 
 
+# blog thumbnai upload commit
+1. image_handler.js, blog.rb, updated views to render image accordingly
+
 pending: styling, authentication, authorisation, blogs:thumbnail, devise: username, first_name, last_name, profile. 

@@ -1,4 +1,7 @@
 <%= javascript_include_tag "character_counter" %>
+<%= javascript_include_tag "image_handler" %>
+<%= javascript_include_tag "generate_button_handler" %>
+
 <div class="alert alert-warning alert-dismissible fade show" role="alert" id="error-message" style="display: none;">
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
@@ -50,6 +53,19 @@
       <span class="spinner-border text-primary" aria-hidden="true"></span>
       </div>
     </button>
+  </div>
+
+  <!-- Thumbnail-->
+ <div>
+    <%= form.label :thumbnail %>
+    <%= form.file_field :thumbnail, accept: 'image/*', id: 'thumbnail-input' %>
+    <div class="mt-3">
+      <% if @blog.persisted? && @blog.thumbnail.attached? %>
+        <%= image_tag @blog.thumbnail, id: 'preview-image', alt: 'Preview', style: 'max-width: 300px; max-height: 300px;' %>
+      <% else %>
+        <%= image_tag '', id: 'preview-image', alt: 'Preview', style: 'display: none; max-width: 300px; max-height: 300px;' %>
+      <% end %>
+    </div>
   </div>
 
   <!-- Body-->

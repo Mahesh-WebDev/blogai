@@ -64,7 +64,7 @@ class BlogsController < ApplicationController
       render json: { error: "Title is missing" }, status: :unprocessable_entity
       return
     end
-    prompt = "Write a 500 words blog on title #{title}. The characters length should be strictly below 5000"
+    prompt = "Write a 500 words blog on title #{title}. The characters length should be strictly below 4000"
     api_key = ENV["GEMINI_API_KEY"]
 
     if api_key.blank?
@@ -117,6 +117,6 @@ class BlogsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def blog_params
-      params.require(:blog).permit(:title, :body)
+      params.require(:blog).permit(:title, :body, :thumbnail)
     end
 end
